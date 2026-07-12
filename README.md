@@ -72,4 +72,3 @@ If you encounter errors:
 - Make sure you are running Python 3.10+.
 - Confirm `placement_prediction_dataset_1000_students.csv` and `model.pkl` are present in the same folder as `app.py`.
 - If Streamlit fails to load, check the package versions in `requirements.txt`.
-#
