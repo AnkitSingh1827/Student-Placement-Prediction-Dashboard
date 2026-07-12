@@ -2,6 +2,12 @@
 
 This repository contains a Streamlit dashboard for the student placement prediction model from `Student.ipynb`.
 
+## Live Demo
+
+Link : https://student-placement-prediction-dashboard-jfthzbzmqjshykoomuenvd.streamlit.app
+
+
+
 ## What is included
 
 - `Student.ipynb` — original notebook containing the dataset exploration and model training steps.
