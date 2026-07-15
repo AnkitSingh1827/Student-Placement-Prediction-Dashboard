@@ -1,46 +1,64 @@
 # Student Placement Prediction Dashboard
 
-This repository contains a Streamlit dashboard for the student placement prediction model from `Student.ipynb`.
+This repository contains a Streamlit dashboard for student placement prediction using a trained Logistic Regression model.
+
+## Verified status
+
+The current implementation has been verified in this workspace:
+
+- The app successfully loads the saved model artifact `placement_model.pkl` and scaler artifact `scaler.pkl`.
+- The loaded model is a `LogisticRegression` classifier with `n_features_in_ = 24` and output classes `[0, 1]`.
+- A smoke test using a real row from the dataset produced a valid prediction and probability output.
+- The Streamlit app starts successfully in headless mode on `http://localhost:8501`.
 
 ## Live Demo
 
-
-Link : https://student-placement-prediction-dashboard-jfthzbzmqjshykoomuenvd.streamlit.app
-
-
+Link: https://student-placement-prediction-dashboard-jfthzbzmqjshykoomuenvd.streamlit.app
 
 ## What is included
 
-- `Student.ipynb` — original notebook containing the dataset exploration and model training steps.
-- `placement_prediction_dataset_1000_students.csv` — dataset used by the model.
-- `model.pkl` — saved LogisticRegression model from the notebook.
-- `app.py` — Streamlit application that loads the saved model and uses the same preprocessing pipeline.
-- `requirements.txt` — dependency file for installing the required Python packages.
+- `Student.ipynb` — notebook used for training and data exploration.
+- `student_placement_prediction_dataset_2026.csv` — dataset used by the app.
+- `placement_model.pkl` — saved trained Logistic Regression model artifact.
+- `scaler.pkl` — saved `StandardScaler` artifact used for preprocessing.
+- `app.py` — Streamlit dashboard entrypoint.
+- `inspect_model.py` — utility to inspect the saved model and scaler metadata.
+- `requirements.txt` — Python dependencies.
 
 ## How it works
 
-The app uses the same model inputs as the notebook:
+The dashboard loads the dataset, encodes categorical values with `LabelEncoder`, scales the input features with `StandardScaler`, and uses the trained Logistic Regression model to predict placement outcome.
 
-- Age
-- Gender (Male/Female)
-- 10th Percentage
-- 12th Percentage
-- IQ
-- CGPA
-- College Tier
-- Communication Skills
-- Technical Skills
-- Aptitude Score
-- Coding Score
-- Internships
-- Projects
-- Backlogs
+The app currently uses these input features:
 
-The app encodes `Gender` as `Male=1` and `Female=0`, scales the input features using `StandardScaler`, and then predicts placement with a logistic regression model.
+- `age`
+- `gender`
+- `cgpa`
+- `branch`
+- `college_tier`
+- `internships_count`
+- `projects_count`
+- `certifications_count`
+- `coding_skill_score`
+- `aptitude_score`
+- `communication_skill_score`
+- `logical_reasoning_score`
+- `hackathons_participated`
+- `github_repos`
+- `linkedin_connections`
+- `mock_interview_score`
+- `attendance_percentage`
+- `backlogs`
+- `extracurricular_score`
+- `leadership_score`
+- `volunteer_experience`
+- `sleep_hours`
+- `study_hours_per_day`
+- `salary_package_lpa`
 
 ## Setup
 
-1. Create a Python environment and activate it.
+1. Create and activate a Python environment.
 2. Install dependencies:
 
 ```bash
@@ -55,27 +73,34 @@ From the repository root:
 streamlit run app.py
 ```
 
-Then open the URL shown in the terminal.
+If you are using the workspace virtual environment on Windows PowerShell:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+streamlit run app.py
+```
 
 ## Notes
 
-- The notebook model is preserved and not modified.
-- `app.py` tries to load `model.pkl` first. If the pickle is not a fitted model, the app will train a fallback logistic regression model using the dataset and the same preprocessing pipeline.
-- This keeps the app usable even if the saved `model.pkl` cannot be used for prediction directly.
+- The app first tries to load `placement_model.pkl` and `scaler.pkl`.
+- If those artifacts are missing or not usable, the app falls back to training a new logistic regression model from the current dataset.
+- The current saved model artifacts in this workspace are working and the app can run predictions successfully.
 
 ## Project structure
 
 - `app.py` — Streamlit dashboard entrypoint.
+- `inspect_model.py` — model inspection utility.
 - `requirements.txt` — dependencies.
-- `README.md` — this documentation.
-- `Student.ipynb` — original notebook.
-- `placement_prediction_dataset_1000_students.csv` — dataset.
-- `model.pkl` — saved model artifact.
+- `README.md` — documentation.
+- `Student.ipynb` — notebook.
+- `student_placement_prediction_dataset_2026.csv` — dataset.
+- `placement_model.pkl` — saved model artifact.
+- `scaler.pkl` — saved scaler artifact.
 
 ## Troubleshooting
 
 If you encounter errors:
 
 - Make sure you are running Python 3.10+.
-- Confirm `placement_prediction_dataset_1000_students.csv` and `model.pkl` are present in the same folder as `app.py`.
-- If Streamlit fails to load, check the package versions in `requirements.txt`.
+- Confirm that `placement_model.pkl`, `scaler.pkl`, and `student_placement_prediction_dataset_2026.csv` are present in the repository root.
+- If Streamlit fails to start, reinstall the dependencies and run the app again.
